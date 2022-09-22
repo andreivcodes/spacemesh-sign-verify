@@ -1,5 +1,13 @@
 import { toHexString, verifyMessage } from "@andreivcodes/spacemeshlib";
-import { Box, TextInput, Group, Button, Text } from "@mantine/core";
+import {
+  Box,
+  TextInput,
+  Group,
+  Button,
+  Text,
+  Loader,
+  Center,
+} from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { sign } from "crypto";
 import type { NextPage } from "next";
@@ -20,11 +28,14 @@ const Home: NextPage = () => {
   const [signature, setSignature] = useState();
   const [result, setResult] = useState();
 
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     async function verify() {
       if (!form.values.signed) return;
       const { text, signature, publicKey } = JSON.parse(form.values.signed);
 
+      setLoading(true);
       setSigner(publicKey);
       setMessage(text);
       setSignature(signature);
@@ -35,6 +46,7 @@ const Home: NextPage = () => {
         .then((response) => response.json())
         .then(async (data) => {
           setResult(data.result);
+          setLoading(false);
         });
     }
     verify();
@@ -60,6 +72,8 @@ const Home: NextPage = () => {
       <Text size="sm" lineClamp={3} mt="md">
         Signature: {signature}
       </Text>
+
+      <Center>{loading && <Loader color="green" variant="bars" />}</Center>
       {result ? (
         <Text size="md" mt="lg">
           Message signature verified ✅
