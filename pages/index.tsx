@@ -7,6 +7,7 @@ import {
   Text,
   Loader,
   Center,
+  Textarea,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { sign } from "crypto";
@@ -55,9 +56,12 @@ const Home: NextPage = () => {
   return (
     <Box sx={{ maxWidth: 300 }} mx="auto" mt="lg">
       <form onSubmit={form.onSubmit((values) => console.log(values))}>
-        <TextInput
+        <Textarea
           withAsterisk
           label="Signed JSON"
+          autosize
+          minRows={2}
+          maxRows={5}
           placeholder={PLACEHOLDER}
           {...form.getInputProps("signed")}
         />
