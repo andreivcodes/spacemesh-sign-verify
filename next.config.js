@@ -2,6 +2,7 @@
 
 module.exports = {
   reactStrictMode: true,
+  output: "standalone",
   webpack: (config, options) => {
     config.experiments = {
       layers: true,

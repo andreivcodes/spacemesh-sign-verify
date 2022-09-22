@@ -21,11 +21,15 @@ export default async function handler(
   console.log(signature);
   console.log("0x" + String(publicKey).slice(26));
 
+  console.log("=================================");
+
   const verify = await verifyMessage(
     String(publicKey).slice(2),
     String(text),
     String(signature).slice(2)
-  );
+  ).catch((e) => console.log(e));
+
+  console.log(verify);
 
   let result = {
     name: "Signature Verification Result",
